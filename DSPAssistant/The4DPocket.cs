@@ -324,7 +324,7 @@ namespace DSPAssistant
             InitFavStorages();
             _uiInitialized = true;
 
-            StartCoroutine(CheckUpdate());
+            //StartCoroutine(CheckUpdate());
         }
 
         private void InitFavStorages()

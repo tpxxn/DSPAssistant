@@ -13,7 +13,7 @@ using UnityEngine.UI;
 namespace DSPAssistant
 {
     // [BepInDependency("me.xiaoye97.plugin.Dyson.LDBTool", BepInDependency.DependencyFlags.HardDependency)]
-    [BepInPlugin("tpxxn.plugin.Dyson.DSPAssistant", "DSPAssistant", "1.0")]
+    [BepInPlugin("tpxxn.plugin.Dyson.DSPAssistant", "DSPAssistant", "1.0.0")]
     public class DSPAssistant : BaseUnityPlugin
     {
         private static volatile DSPAssistant instance = null;
