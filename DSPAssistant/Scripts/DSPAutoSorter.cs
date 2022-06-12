@@ -1,26 +1,7 @@
-﻿using BepInEx;
-using BepInEx.Logging;
-using BepInEx.Configuration;
+﻿using BepInEx.Configuration;
 using HarmonyLib;
-using System;
-using System.IO;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Reflection.Emit;
-using System.Net;
-using System.Linq;
-using System.Text;
-using System.Collections;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using UnityEngine.Networking;
-using System.Security;
-using System.Security.Permissions;
 
 namespace DSPAssistant
 {
@@ -40,45 +21,43 @@ namespace DSPAssistant
 
         public static Sprite settingIconSprite;
         public static Sprite squareIconSprite;
-        private static ManualLogSource Logger;
 
         public void Awake()
         {
-            Logger = DSPAssistant.logger;
             Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
 
-            enableSortInInventry = DSPAssistant.Instance.Config.Bind("AutoSorter General", "enableSortInInventry", true, "enable sort in normal inventry.");
-            enableSortInStorage = DSPAssistant.Instance.Config.Bind("AutoSorter General", "enableSortInStorage", true, "enable sort in storages.");
-            enableSortInFuelChamber = DSPAssistant.Instance.Config.Bind("AutoSorter General", "enableSortInFuelChamber", true, "enable sort in Mecha fuelchamber.");
-            enableSortInMiner = DSPAssistant.Instance.Config.Bind("AutoSorter General", "enableSortInMiner", true, "enable sort in inventry of miner.");
-            enableSortInAssembler = DSPAssistant.Instance.Config.Bind("AutoSorter General", "enableSortInAssembler", true, "enable sort in inventry of Assemblers or smelter.");
-            enableForcedSort = DSPAssistant.Instance.Config.Bind("AutoSorter ForcedSort", "enableForcedSort", true, "enable forced sort.");
+            enableSortInInventry = Bootstrap.Instance.Config.Bind("AutoSorter General", "enableSortInInventry", true, "enable sort in normal inventry.");
+            enableSortInStorage = Bootstrap.Instance.Config.Bind("AutoSorter General", "enableSortInStorage", true, "enable sort in storages.");
+            enableSortInFuelChamber = Bootstrap.Instance.Config.Bind("AutoSorter General", "enableSortInFuelChamber", true, "enable sort in Mecha fuelchamber.");
+            enableSortInMiner = Bootstrap.Instance.Config.Bind("AutoSorter General", "enableSortInMiner", true, "enable sort in inventry of miner.");
+            enableSortInAssembler = Bootstrap.Instance.Config.Bind("AutoSorter General", "enableSortInAssembler", true, "enable sort in inventry of Assemblers or smelter.");
+            enableForcedSort = Bootstrap.Instance.Config.Bind("AutoSorter ForcedSort", "enableForcedSort", true, "enable forced sort.");
 
             // Sprite[] sprites = (Sprite[])Resources.LoadAll<Sprite>("");
-            //      //LogManager.Logger.LogInfo("----------------------------------------icon load");
+            //      //Bootstrap.Debug("----------------------------------------icon load");
             //foreach(Sprite sprite in sprites)
             // {
             //     if (sprite.name == "settings-icon")
             //     {
             //         settingIconSprite = sprite;
-            //         //LogManager.Logger.LogInfo("-------------------------------------settingIconSprite name : " + settingIconSprite.name);
+            //         //Bootstrap.Debug("-------------------------------------settingIconSprite name : " + settingIconSprite.name);
             //     } else if (sprite.name == "solid-bg")
             //     {
             //         squareIconSprite = sprite;
-            //         //LogManager.Logger.LogInfo("-------------------------------------squareIconSprite name : " + squareIconSprite.name);
+            //         //Bootstrap.Debug("-------------------------------------squareIconSprite name : " + squareIconSprite.name);
             //     }
             // }
             //settingIconSprite = Resources.Load<Sprite>("ui/textures/sprites/icons/settings-icon");
             //if (settingIconSprite == null )
             //{
-            //    LogManager.Logger.LogInfo("-------------------------------------settingIconSprite is null");
+            //    Bootstrap.Debug("-------------------------------------settingIconSprite is null");
 
             //}
 
             //squareIconSprite = Resources.Load<Sprite>("ui/textures/sprites/icons/solid-bg");
             //if (squareIconSprite == null)
             //{
-            //    LogManager.Logger.LogInfo("-------------------------------------squareIconSprite is null");
+            //    Bootstrap.Debug("-------------------------------------squareIconSprite is null");
 
             //}
 
@@ -89,10 +68,10 @@ namespace DSPAssistant
         //[HarmonyPatch(typeof(StorageComponent), "NotifyStorageChange")]
         public static void StorageComponent_NotifyStorageChange_Postfix(StorageComponent __instance)
         {
-            Logger.LogInfo("+++++++++++++++++++++++++++++++++StorageComponent　NotifyStorageChange");
+            Bootstrap.Debug("+++++++++++++++++++++++++++++++++StorageComponent　NotifyStorageChange");
             //if (__instance.entityId > 0)
             //{
-            //    LogManager.Logger.LogInfo("+++++++++++++++++++++++++++++++++StorageComponent　NotifyStorageChange　" + GameMain.data.localPlanet.factory.entityPool[__instance.entityId].assemblerId);
+            //    Bootstrap.Debug("+++++++++++++++++++++++++++++++++StorageComponent　NotifyStorageChange　" + GameMain.data.localPlanet.factory.entityPool[__instance.entityId].assemblerId);
             //    __instance.Sort();
             //}
         }
@@ -154,12 +133,12 @@ namespace DSPAssistant
         //    }
         //    else if (enableSortInMiner.Value && enableForcedSort.Value && __instance.transform.parent.gameObject.name == "Miner Window")
         //    {
-        //        LogManager.Logger.LogInfo("+++++++++++++++++++++++++++++++++HandTake　　" + __instance.transform.parent.gameObject.name);
+        //        Bootstrap.Debug("+++++++++++++++++++++++++++++++++HandTake　　" + __instance.transform.parent.gameObject.name);
         //        __instance.OnSort();
         //    }
         //    else if (enableSortInAssembler.Value && enableForcedSort.Value && __instance.transform.parent.gameObject.name == "Assembler Window")
         //    {
-        //        LogManager.Logger.LogInfo("+++++++++++++++++++++++++++++++++HandTake　　" + __instance.transform.parent.gameObject.name);
+        //        Bootstrap.Debug("+++++++++++++++++++++++++++++++++HandTake　　" + __instance.transform.parent.gameObject.name);
         //        __instance.OnSort();
         //    }
         //}
@@ -188,7 +167,7 @@ namespace DSPAssistant
                 if (enableSortInInventry.Value && enableForcedSort.Value && __instance.name == "Player Inventory")
                 {
                     __instance.OnSort();
-                    //LogManager.Logger.LogInfo("+++++++++++++++++++++++++++++++++" + __instance.name);
+                    //Bootstrap.Debug("+++++++++++++++++++++++++++++++++" + __instance.name);
                 }
             }
         }
@@ -233,7 +212,7 @@ namespace DSPAssistant
 
         //    public static void Prefix()
         //    {
-        //        LogManager.Logger.LogInfo("+++++++++++++++++++++++++++++++++ストレージのオプションボタン作成");
+        //        Bootstrap.Debug("+++++++++++++++++++++++++++++++++ストレージのオプションボタン作成");
         //        GameObject.Find("UI Root/Overlay Canvas/In Game/Windows/Player Inventory/panel-bg/btn-box").GetComponent<RectTransform>().sizeDelta = new Vector2(85, GameObject.Find("UI Root/Overlay Canvas/In Game/Windows/Player Inventory/panel-bg/btn-box").GetComponent<RectTransform>().sizeDelta.y);　// 60，24
         //        GameObject.Find("UI Root/Overlay Canvas/In Game/Windows/Player Inventory/panel-bg/btn-box").transform.localPosition = new Vector3(219, GameObject.Find("UI Root/Overlay Canvas/In Game/Windows/Player Inventory/panel-bg/btn-box").transform.localPosition.y, 0);　// 234, 325, 0
         //        GameObject.Find("UI Root/Overlay Canvas/In Game/Windows/Player Inventory/panel-bg/btn-box/sort-btn").transform.localPosition = new Vector3(-27, 0, 0); // -15, 0, 0
@@ -246,12 +225,12 @@ namespace DSPAssistant
         //        configButton.transform.Find("x").localPosition = new Vector3(0, 0, 0);
         //        configButton.GetComponent<RectTransform>().sizeDelta = new Vector2(27, 18);
         //        //var sprite = Resources.Load<Sprite>("settings-icon");
-        //        //LogManager.Logger.LogInfo("sprite.name" + sprite.name);
+        //        //Bootstrap.Debug("sprite.name" + sprite.name);
 
         //        //configButton.transform.Find("x").GetComponent<Image>().sprite = settingIconSprite;
-        //        //LogManager.Logger.LogInfo("sprite.name 1 = " + configButton.GetComponent<Image>().sprite.name);
+        //        //Bootstrap.Debug("sprite.name 1 = " + configButton.GetComponent<Image>().sprite.name);
         //        //configButton.GetComponent<Image>().sprite = squareIconSprite;
-        //        //LogManager.Logger.LogInfo("sprite.name 2 = " + configButton.GetComponent<Image>().sprite.name);
+        //        //Bootstrap.Debug("sprite.name 2 = " + configButton.GetComponent<Image>().sprite.name);
         //        //ボタンイベントの作成
         //        //configButton.GetComponent<UIButton>().button.onClick.AddListener(new UnityAction(OnSignButtonClick));
 

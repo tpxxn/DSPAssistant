@@ -1,21 +1,20 @@
-﻿using BepInEx.Logging;
-using HarmonyLib;
+﻿using HarmonyLib;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace DSPAssistant
 {
-    internal class GodModeButton
+    internal class GodModeButton : MonoBehaviour
     {
         public static bool initialCheckFlag = true;
         public static bool valueAtLastCheck = true;  // This initial value won't matter.
 
-        public static void Awake()
+        public void Awake()
         {
             enabledSprite = GetSprite(new Color(0, 1, 0));  // Bright Green
             disabledSprite = GetSprite(new Color(0.5f, 0.5f, 0.5f));  // Medium Grey
-
-            DSPAssistant.logger.LogInfo("GodModeButton Initialization complete.");
+            Harmony.CreateAndPatchAll(typeof(GodModeButton));
+            Bootstrap.Debug("GodModeButton Initialization complete.");
         }
 
         public static RectTransform enableDisableButton = null;

@@ -12,15 +12,33 @@
 
 4.DSPAutoSorter
 
-5.Tenfold ItemStack
+5.Multiple ItemStack
 
-6.Double construction range
+6.Multiple construction range
+
+7.Multiple range of clickable building
+
+### Default HotKey
+
+|  Feature   | HotKey  |
+|  ----  | ----  |
+| 4DPocket  | End |
 
 ### Attention
 
 Need install BepInEx
 
+Feature switches are in the General section of the configuration file
+
 ### ChangeLog
+
+v1.0.1
+
+Add Option for all features
+
+Add multiple modification for ItemStack
+
+Add modify range of clickable building feature
 
 V1.0.0
 
@@ -28,7 +46,7 @@ Transfer from Icarus Infinite Energy mod
 
 ### RoadMap
 
-> Add Option for all features
+> Optimize UI interface
 
 ## 中文
 
@@ -42,15 +60,33 @@ Transfer from Icarus Infinite Energy mod
 
 4.打开储物箱、背包自动整理(DSPAutoSorter)
 
-5.10倍堆叠
+5.多倍堆叠
 
-6.2倍建造范围
+6.多倍建造范围
+
+7.多倍可点击建筑范围
+
+### 默认热键
+
+|  功能   | 热键  |
+|  ----  | ----  |
+| 4DPocket  | End |
 
 ### 注意事项
 
 需安装 BepInEx
 
+功能开关在配置文件的通用小节
+
 ### 更新日志
+
+v1.0.1
+
+为所有功能添加开关
+
+为堆叠添加倍数修改
+
+添加可点击建筑的范围
 
 V1.0.0
 
@@ -58,4 +94,4 @@ V1.0.0
 
 ### 未来规划
 
->为所有功能添加开关
+> 优化 UI 界面

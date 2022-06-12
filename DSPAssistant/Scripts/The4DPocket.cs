@@ -95,7 +95,7 @@ namespace DSPAssistant
 
         void Start()
         {
-            HotKey = DSPAssistant.Instance.Config.Bind("config", "HotKey", KeyCode.End, "4DPocket KeyCode");
+            HotKey = Bootstrap.Instance.Config.Bind("The4DPocket", "HotKey", KeyCode.End, "4DPocket KeyCode");
             Init();
         }
 
@@ -140,7 +140,7 @@ namespace DSPAssistant
                 Localization.LoadTranslations(File.ReadAllText(translationsPath));
                 if (Localization._translations["Version"] < TranslationsVersion)
                 {
-                    Debug.Log($"Old translations found, updating to new version: {TranslationsVersion}");
+                    Bootstrap.Debug($"Old translations found, updating to new version: {TranslationsVersion}");
                     var fs = File.OpenWrite(translationsPath);
                     Assembly.GetExecutingAssembly()
                         .GetManifestResourceStream("DSPAssistant.Assets.Strings.json")
@@ -166,7 +166,7 @@ namespace DSPAssistant
 
         public void OnDestroy()
         {
-            Debug.Log("Unloading 4D Pocket from ScriptEngine");
+            Bootstrap.Debug("Unloading 4D Pocket from ScriptEngine");
             _harmoney?.UnpatchSelf();
             if (_p != null)
             {
@@ -176,7 +176,7 @@ namespace DSPAssistant
 
         public static void Main()
         {
-            Debug.Log("4D Pocket loading from ScriptLoader");
+            Bootstrap.Debug("4D Pocket loading from ScriptLoader");
             HotKey = new ConfigFile(
                     $"{Paths.GameRootPath}/BepInEx/config/tpxxn.plugin.Dyson.DSPAssistant,cfg", true)
                 .Bind("config", "HotKey", KeyCode.End, "插件按键");
@@ -185,7 +185,7 @@ namespace DSPAssistant
 
         public static void Unload()
         {
-            Debug.Log("Unloading 4D Pocket from ScriptLoader");
+            Bootstrap.Debug("Unloading 4D Pocket from ScriptLoader");
             _harmoney?.UnpatchSelf();
             if (_p != null)
             {
@@ -599,7 +599,7 @@ namespace DSPAssistant
                         _uiStation.transform.SetAsLastSibling();
                         _uiGame.OpenPlayerInventory();
                         _inspectingStation = true;
-                        DSPAssistant.logger.LogError("打开物流站成功");
+                        Bootstrap.Logger.LogError("打开物流站成功");
                     }
                     else
                     {
@@ -609,7 +609,7 @@ namespace DSPAssistant
                 catch (Exception message)
                 {
                     _inspectingStation = false;
-                    Debug.Log(message.StackTrace);
+                    Bootstrap.Debug(message.StackTrace);
                 }
             }
             else
@@ -676,7 +676,7 @@ namespace DSPAssistant
                 catch (Exception message)
                 {
                     _inspectingStorage = false;
-                    Debug.Log(message.StackTrace);
+                    Bootstrap.Debug(message.StackTrace);
                 }
             }
             else
@@ -708,7 +708,7 @@ namespace DSPAssistant
 
             if (uwr.isNetworkError)
             {
-                Debug.Log($"4DPocket: Error while checking update from {uri}: {uwr.error}");
+                Bootstrap.Debug($"4DPocket: Error while checking update from {uri}: {uwr.error}");
             }
             else
             {
@@ -736,7 +736,7 @@ namespace DSPAssistant
                 }
                 catch (Exception e)
                 {
-                    Debug.Log(
+                    Bootstrap.Debug(
                         $"4DPocket: Error while checking update from {uri}: {uwr.downloadHandler.text} Error: {e.Message}");
                 }
             }

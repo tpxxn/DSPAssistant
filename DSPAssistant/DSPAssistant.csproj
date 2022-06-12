@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -79,13 +80,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DSPAutoSorter.cs" />
-    <Compile Include="ReflectionUtil.cs" />
-    <Compile Include="GodModeButton.cs" />
-    <Compile Include="DSPAssistant.cs" />
-    <Compile Include="The4DPocket.cs" />
+    <Compile Include="Bootstrap.cs" />
+    <Compile Include="Scripts\Icarus\BuildArea.cs" />
+    <Compile Include="Scripts\ConsoleSplash.cs" />
+    <Compile Include="Scripts\DSPAutoSorter.cs" />
+    <Compile Include="Scripts\Icarus\IcarusInfiniteEnergy.cs" />
+    <Compile Include="Scripts\Icarus\TouchArea.cs" />
+    <Compile Include="Scripts\ItemStack.cs" />
+    <Compile Include="Scripts\ReflectionUtil.cs" />
+    <Compile Include="Scripts\GodModeButton.cs" />
+    <Compile Include="Scripts\The4DPocket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SimpleJSON.cs" />
+    <Compile Include="Scripts\Utils\SimpleJSON.cs" />
+    <Compile Include="Scripts\Utils\BCE.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Assets\4dpocket.ab" />
@@ -93,4 +100,8 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /e /r /y $(ProjectDir)bin\Release\DSPAssistant.dll $(ProjectDir)Package
+xcopy /e /r /y $(ProjectDir)bin\Release\DSPAssistant.dll "C:\software\steam\steamapps\common\Dyson Sphere Program\BepInEx\plugins"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
